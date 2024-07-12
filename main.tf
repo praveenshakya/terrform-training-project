@@ -1,9 +1,26 @@
-resource "azurerm_resource_group" "rg" {
-    name = random_string.rs.id
-    location = var.location
+#=======================================================
+resource "random_string" "datagen" {
+  length = 24
+  special = false
+  upper = false
 }
 
-resource "random_string" "rs" {
-    special = false
-    length = 9
+
+resource "random_password" "password" {
+  length           = 16
+  override_special = "!#$%&*()-_=+[]{}<>:?"
+}
+
+
+# =========================================================
+
+#output Demo
+
+output "kayname" {
+  value = random_string.datagen.id
+}
+
+output "getPassword" {
+  value = nonsensitive(random_password.password.result)
+  sensitive = false
 }
